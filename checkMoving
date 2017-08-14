@@ -1,0 +1,42 @@
+accel.on('ready', function () {
+    // Stream accelerometer data
+    let previous, current, difference
+    accel.on('data', function(xyz){
+        current = xyz;
+        difference = [];
+
+        //getting the difference between the current data packet and the previous data packet
+        if (previous){
+            difference.push(current[0]-previous[0]) //x channel
+            difference.push(current[1]-previous[1]) //y channel
+            difference.push(current[2]-previous[2]) //z channel
+        } //if there's no previous, then you don't calculate anything
+        previous = current;
+
+        //returns a boolean for if or not there is movement
+        if (diffence.length){
+            //check if there's x/y movement
+            if (Math.abs(difference[0])>0.1 || Math.abs(difference[1])>0.1){
+                //this means door opened
+                console.log('the door opened, replace code for camera here')
+            }
+            // //check z in case the device fell
+            // if (Math.abs(difference[2])>0.5){
+            //     //this means the device fell
+            // }
+        }
+
+    })
+
+//   accel.on('data', function (xyz) {
+//     console.log('x:', xyz[0].toFixed(2),
+//       'y:', xyz[1].toFixed(2),
+//       'z:', xyz[2].toFixed(2));
+
+//   });
+
+});
+
+accel.on('error', function(err){
+  console.log('Error:', err);
+});
